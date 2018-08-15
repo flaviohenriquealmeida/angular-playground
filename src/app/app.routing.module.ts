@@ -11,12 +11,12 @@ const routes: Routes = [
         redirectTo: 'home',
     }, 
     { 
-        path: '',
-        loadChildren: './photos/photos.module#PhotosModule'
-    },
-    { 
         path: 'home',
         loadChildren: './home/home.module#HomeModule'
+    },
+    { 
+        path: '',
+        loadChildren: './photos/photos.module#PhotosModule'
     },              
     { 
         path: 'error', 

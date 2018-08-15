@@ -6,12 +6,11 @@ import { PhotosComponent } from './photos/photos.component';
 import { LoadButtonComponent } from './load-button/load-button.component';
 import { FilterByDescription } from './filter-by-description.pipe';
 import { PhotoModule } from '../photo/photo.module';
-import { CardModule } from '../../shared/components/card/card.module';
 import { SearchComponent } from './search/search.component';
-import { DarkenOnHoverModule } from '../../shared/directives/darken-on-hover/darken-on-hover.module';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { SafePipeModule } from '../../shared/pipes/safe-pipe/safe-pipe.module';
+
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -22,13 +21,8 @@ import { SafePipeModule } from '../../shared/pipes/safe-pipe/safe-pipe.module';
         SearchComponent
     ],
     imports: [ 
-        CommonModule,
-        HttpClientModule,
         PhotoModule,
-        CardModule, 
-        DarkenOnHoverModule,
-        RouterModule,
-        SafePipeModule
+        SharedModule
     ]
 })
 export class PhotoListModule {}

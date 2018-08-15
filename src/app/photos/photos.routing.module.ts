@@ -9,8 +9,7 @@ import { PhotoDetailsComponent } from './photo-details/photo-details.component';
 
 const routes: Routes = [
     {
-        path: 'user/:userName', 
-        pathMatch: 'full',
+        path: 'user/:userName',
         component: PhotoListComponent,
         resolve: {
             photos: PhotoListResolver
