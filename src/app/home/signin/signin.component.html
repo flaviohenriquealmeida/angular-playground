@@ -1,5 +1,8 @@
 <h4 class="text-center">Login</h4>
 
+<div dialogAnchor></div>
+<div class="open-button" (click)="openDialogBox()">Open dialog box</div>
+
 <form [formGroup]="loginForm" class="form mt-4" (submit)="login()">
 
     <div class="form-group">

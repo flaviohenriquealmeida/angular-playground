@@ -1,5 +1,5 @@
 import { browser, element, by } from 'protractor';
-import { elementAttribute } from '../../node_modules/@angular/core/src/render3/instructions';
+import { elementAttribute } from '@angular/core/src/render3/instructions';
 
 export class PhotoDetailPage {
 

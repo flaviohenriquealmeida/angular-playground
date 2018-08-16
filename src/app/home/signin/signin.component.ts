@@ -1,8 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PlatformDetectorService } from '../../core/plataform-detector/platform-detector.service';
+import { DialogComponent } from '../../shared/components/dialog/dialog.component';
+import { DialogDirective } from '../../shared/components/dialog/dialog.directive';
 
 @Component({
     templateUrl: './signin.component.html'
@@ -12,13 +14,15 @@ export class SignInComponent implements OnInit {
     fromUrl: string;
     loginForm: FormGroup;
     @ViewChild('userNameInput') userNameInput: ElementRef<HTMLInputElement>;
-    
+    @ViewChild(DialogDirective) dialogAnchor: DialogDirective;
+  
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private router: Router,
         private platformDetectorService: PlatformDetectorService,
-        private activatedRoute: ActivatedRoute) { }
+        private activatedRoute: ActivatedRoute
+    ) { }
 
     ngOnInit(): void {
         this.activatedRoute
@@ -53,5 +57,9 @@ export class SignInComponent implements OnInit {
                     alert('Invalid user name or password');
                 }
             );
+    }
+
+    openDialogBox() {
+        this.dialogAnchor.createDialog(DialogComponent);
     }
 }

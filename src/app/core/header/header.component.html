@@ -9,7 +9,7 @@
         <ap-menu #menu>
             <ul class="list-unstyled">
                 <li>
-                    <a showIfLogged [routerLink]="['p','add']">Upload</a>
+                    <a showIfLogged [routerLink]="['p','add']" (click)="menu.toggle()">Upload</a>
                 </li>
             </ul>
         </ap-menu>

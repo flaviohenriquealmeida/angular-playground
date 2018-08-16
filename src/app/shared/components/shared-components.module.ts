@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { AlertComponent } from './alert/alert.component';
 import { CardComponent } from './card/card.component';
 import { LoadingComponent } from './loading/loading.component';
 import { MenuComponent } from './menu/menu.component';
 import { VMessageComponent } from './vmessage/vmessage.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './loading/loading.interceptor';
-import { CommonModule } from '@angular/common';
+import { DialogComponent } from './dialog/dialog.component';
+import { DialogDirective } from './dialog/dialog.directive';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
     declarations: [
@@ -14,14 +18,23 @@ import { CommonModule } from '@angular/common';
         CardComponent,
         LoadingComponent,
         MenuComponent,
-        VMessageComponent
+        VMessageComponent,
+        DialogComponent,
+        DialogDirective,
+        ConfirmDialogComponent
+    ],
+    entryComponents: [
+        DialogComponent
     ],
     exports: [
         AlertComponent,
         CardComponent,
         LoadingComponent,
         MenuComponent,
-        VMessageComponent
+        VMessageComponent,
+        DialogComponent,
+        DialogDirective,
+        ConfirmDialogComponent
     ],
     imports: [
         CommonModule

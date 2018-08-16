@@ -7,7 +7,6 @@ import { SharedDirectiveModule } from './directives/shared-directives.module';
 import { SharedComponentModule } from './components/shared-components.module';
 
 @NgModule({
-    imports: [],
     exports: [
         SharedDirectiveModule,
         SharedComponentModule,
