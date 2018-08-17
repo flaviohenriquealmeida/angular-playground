@@ -1,9 +1,9 @@
-import { Component, OnInit, ElementRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../core/auth/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PlatformDetectorService } from '../../core/plataform-detector/platform-detector.service';
-import { DialogComponent } from '../../shared/components/dialog/dialog.component';
+
+import { AuthService } from '../../core/auth/auth.service';
 import { DialogDirective } from '../../shared/components/dialog/dialog.directive';
 
 @Component({
@@ -60,6 +60,6 @@ export class SignInComponent implements OnInit {
     }
 
     openDialogBox() {
-        this.dialogAnchor.createDialog(DialogComponent);
+        this.dialogAnchor.createDialog();
     }
 }
