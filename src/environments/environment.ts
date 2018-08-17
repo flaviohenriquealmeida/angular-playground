@@ -2,6 +2,7 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// ng serve --host=0.0.0.0 --disable-host-check
 export const environment = {
   production: false,
   ApiUrl: 'http://localhost:3000',

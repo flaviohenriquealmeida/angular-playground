@@ -5,16 +5,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedDirectiveModule } from './directives/shared-directives.module';
 import { SharedComponentModule } from './components/shared-components.module';
+import { LowerCaseDirective } from './validators/lower-case.directive';
+import { SharedValidatorsModule } from './validators/shared-validators.module';
 
 @NgModule({
     exports: [
         SharedDirectiveModule,
         SharedComponentModule,
+        SharedValidatorsModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        RouterModule
+        RouterModule,
     ]   
 })
 export class SharedModule {}
