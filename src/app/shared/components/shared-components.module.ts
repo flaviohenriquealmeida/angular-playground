@@ -11,6 +11,9 @@ import { LoadingInterceptor } from './loading/loading.interceptor';
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogDirective } from './dialog/dialog.directive';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { AvatarComponent } from './avatar/avatar.component';
+import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
+import { RouterModule } from '../../../../node_modules/@angular/router';
 
 @NgModule({
     declarations: [
@@ -21,7 +24,9 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
         VMessageComponent,
         DialogComponent,
         DialogDirective,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        AvatarComponent,
+        ProfileMenuComponent
     ],
     entryComponents: [
         DialogComponent
@@ -34,10 +39,13 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
         VMessageComponent,
         DialogComponent,
         DialogDirective,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        AvatarComponent,
+        ProfileMenuComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        RouterModule
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,
