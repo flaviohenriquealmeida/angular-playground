@@ -16,14 +16,14 @@
 }
 
 .profile-menu-content:after {
-        position: absolute;
-        top: -1.3em;
-        right: 4px;
-        content: '';
-        width: 0;
-        height: 0;
-        border: 10px solid transparent;
-        border-bottom-color: #fff; 
+    position: absolute;
+    top: -1.3em;
+    right: 4px;
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-bottom-color: #fff; 
 }
 
 .profile-menu-content:before {
@@ -36,8 +36,6 @@
     border: 13px solid transparent;
     border-bottom-color: #e3e8ed; 
 }
-
-
 
 .profile-menu-content ul {
     padding: 0;
