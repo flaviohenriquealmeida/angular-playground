@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { PhotoService } from "../photo/photo.service";
 import { Photo } from "../photo/photo";
@@ -17,6 +17,7 @@ export class PhotoDetailsComponent implements OnInit {
     photo$: Observable<Photo>;
     comments$: Observable<PhotoComment[]>
     photoId: number;
+    commentsCountFromCurrentUser = 0;
 
     constructor(
         private route: ActivatedRoute,
@@ -66,5 +67,6 @@ export class PhotoDetailsComponent implements OnInit {
         this.comments$ = this.photoService
             .addComment(this.photoId, comment)
             .pipe(switchMap(() => this.photoService.getComments(this.photoId)))
+            .pipe(tap(() => this.commentsCountFromCurrentUser++));
     }
 }
