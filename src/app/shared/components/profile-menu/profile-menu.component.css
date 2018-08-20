@@ -3,7 +3,6 @@
 }
 
 .profile-menu-content {
-    display: none;
     opacity: 0;
     width: 100%;
     position: absolute;
@@ -13,8 +12,8 @@
     border-radius: 3px;
     border: solid 1px #e3e8ed;
     padding: 0;
-    transition: all 0.3s;
-    z-index: 1;
+    transition: all 0.4s;
+    z-index: -1; /* avoid clicking when invisible */
 }
 
 .profile-menu-content:after {
@@ -53,6 +52,6 @@
 }
 
 .profile-menu.active .profile-menu-content {
-    display: block;
+    z-index: 1; /* bring to front */
     opacity: 1;
 }
