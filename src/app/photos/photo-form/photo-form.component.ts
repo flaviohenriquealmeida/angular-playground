@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
-import { HttpResponse } from '@angular/common/http';
 
 import { PhotoService } from '../photo/photo.service';
 import { AlertService } from '../../shared/components/alert/alert.service';

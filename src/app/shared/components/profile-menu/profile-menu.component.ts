@@ -17,13 +17,12 @@ export class ProfileMenuComponent {
     constructor(
         private userService: UserService, 
         private router:Router) {
-
         this.user$ = userService.getUser();
     }
 
     logout() {
-        this.userService.logout();
-        this.router.navigate(['']);
+        this.userService.discartToken();
+        this.router.navigate(['home']);
     }
 
     toggle() {

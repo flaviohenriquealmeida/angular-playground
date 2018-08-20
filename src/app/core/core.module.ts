@@ -3,6 +3,7 @@ import { HeaderComponent } from './header/header.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { RequestInterceptor } from './auth/request.interceptor';
+import { ResponseInterceptor } from './auth/response.interceptor';
 import { FooterComponent } from './footer/footer.component';
 import { SharedModule } from '../shared/shared.module';
 
@@ -23,6 +24,11 @@ import { SharedModule } from '../shared/shared.module';
         {
             provide: HTTP_INTERCEPTORS,
             useClass: RequestInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ResponseInterceptor,
             multi: true
         }
     ]

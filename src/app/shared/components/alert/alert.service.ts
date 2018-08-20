@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, BehaviorSubject } from "rxjs";
 import { AlertType, Alert } from "./alert";
 import { Router, NavigationStart } from "@angular/router";
 
 @Injectable({ providedIn: 'root'})
 export class AlertService {
 
-    alertSubject: Subject<Alert> = new Subject<Alert>();
+    alertSubject: BehaviorSubject<Alert> = new BehaviorSubject<Alert>(null);
     keepAfterRouteChange = false;
 
     constructor(router: Router) {
