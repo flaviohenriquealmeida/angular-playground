@@ -1,12 +1,11 @@
 .profile-menu {
     position: relative;
 }
-
 .profile-menu-content {
     opacity: 0;
     width: 100%;
     position: absolute;
-    margin: 1em 0 0 0;
+    margin: 0.2em 0 0 0;
     color: #747c81;
     background: #fff;
     border-radius: 3px;
