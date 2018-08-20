@@ -5,6 +5,7 @@ import { PlatformDetectorService } from '../../core/plataform-detector/platform-
 
 import { AuthService } from '../../core/auth/auth.service';
 import { DialogDirective } from '../../shared/components/dialog/dialog.directive';
+import { AlertService } from '../../shared/components/alert/alert.service';
 
 @Component({
     templateUrl: './signin.component.html'
@@ -21,7 +22,8 @@ export class SignInComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         private platformDetectorService: PlatformDetectorService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private alerService: AlertService
     ) { }
 
     ngOnInit(): void {
@@ -54,7 +56,7 @@ export class SignInComponent implements OnInit {
                     this.loginForm.reset();
                     this.platformDetectorService.isPlatformBrowser() && 
                         this.userNameInput.nativeElement.focus();
-                    alert('Invalid user name or password');
+                        this.alerService.danger('Invalid user name or password');
                 }
             );
     }

@@ -1,3 +1,4 @@
+// esta engolindo exceções, ver o motivo
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -25,5 +26,6 @@ import { SharedModule } from '../shared/shared.module';
     }
   ]
   */
+  
 })
 export class ErrorsModule { }

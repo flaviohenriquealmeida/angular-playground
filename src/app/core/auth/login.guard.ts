@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '../user/user.service';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map, tap, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+
+import { UserService } from '../user/user.service';
 
 @Injectable({ providedIn: 'root'})
 export class LoginGuard implements CanActivate {
@@ -15,8 +18,11 @@ export class LoginGuard implements CanActivate {
         state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
             
             if(this.userService.isLogged()){
-                this.router.navigate(['user', this.userService.getUserName()])
-                return false;
+                
+                return this.userService.getUser()
+                    .pipe(map(user => user.name))
+                    .pipe(tap(userName => this.router.navigate(['user', userName])))
+                    .pipe(switchMap(() => of(false)));
             }
             return true;
     }

@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
 
 import { environment } from '../../../environments/environment';
 import { from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom, tap } from 'rxjs/operators';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -53,20 +53,21 @@ export class GlobalErrorHandler implements ErrorHandler {
                 .map(sf => sf.toString())
                 .join('\n')
             ))
-            .pipe(switchMap(stackAsString => 
-                    this.serverLogService.log({ 
-                        message, 
-                        url, 
-                        userName: this.userService.getUserName(), 
-                        stack: stackAsString 
-                    })
-            )).subscribe(
+            .pipe(withLatestFrom(this.userService.getUser()))
+            .pipe(switchMap(([stackFrameAsString, user]) =>   
+                this.serverLogService.log({ 
+                    message, 
+                    url, 
+                    userName: user.name,
+                    stack: stackFrameAsString 
+                })
+            ))
+            .subscribe(
                 () => console.log('Error logged on server'),
                 err => {
                     console.log(err);
                     console.log('Fail to send error log to server');
                 }
-            );
-           
+            );       
     }
 }
