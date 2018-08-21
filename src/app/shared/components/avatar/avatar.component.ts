@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class AvatarComponent {
 
-    @Input() imageSrc = '/assets/img/avatar.jpg';
+    @Input() imageSrc = 'assets/img/avatar.jpg';
     @Input() userName = 'Please login';
 }
