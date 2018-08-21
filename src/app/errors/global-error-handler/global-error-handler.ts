@@ -9,32 +9,15 @@ import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { UserService } from "../../core/user/user.service";
 import { ServerLogService } from "./server-log.service";
 
-const stackFrameArrayToString = (stackArray: StackTrace.StackFrame[]) => 
-    stackArray.map(sf => sf.toString()).join('\n');
+const stackAsArrayToString = (stackAsArray: StackTrace.StackFrame[]) => 
+    stackAsArray.map(sf => sf.toString()).join('\n');
 
-const logToConsole = (
-        message: string, userName: string, 
-        urlAcessed: string, stackFrame: string) => {
+const logToConsole = ({message, userName, acessedUrl, stackAsString}) => {
     console.log(`%cERROR Error: ${message}`, 'font-size: 13px; font-weight: bold');
-    console.table({userName, urlAcessed});
-    console.log(stackFrame);
+    console.table({userName, acessedUrl});
+    console.log(stackAsString);
 }
 
-const createLogObject = (
-    message: string, userName: string, 
-    urlAcessed: string, stackFrame: string) => ({ 
-        message, 
-        url: urlAcessed, 
-        userName: userName,
-        stack: stackFrame 
-    });
-
-const logToConsoleAndCreateObjectLog = (
-    message: string, userName: string, 
-    urlAcessed: string, stackFrame: string) => {
-        logToConsole(message, userName, urlAcessed, stackFrame);
-        return createLogObject(message, userName, urlAcessed, stackFrame);
-}
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -51,7 +34,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
         if(!this.dependenciesInjected) this.injectDependencies();
 
-        const url = this.location instanceof PathLocationStrategy 
+        const acessedUrl = this.location instanceof PathLocationStrategy 
             ? this.location.path() 
             : ''; 
 
@@ -62,22 +45,26 @@ export class GlobalErrorHandler implements ErrorHandler {
         if(environment.production) this.router.navigate(['/error']);
 
         from(StackTrace.fromError(error))
-            .pipe(map(stackFrameArrayToString))
+            .pipe(map(stackAsArrayToString))
             .pipe(withLatestFrom(this.userService.getUser()))
             .pipe(
-                switchMap(([stackFrameAsString, user]) =>  {
-                    const log = logToConsoleAndCreateObjectLog(
-                        message, url, user.name, stackFrameAsString);
+                switchMap(([stackAsString, user]) =>  {
+                    const log = { 
+                        message, 
+                        userName: user.name, 
+                        acessedUrl, 
+                        stackAsString
+                    };
+                    logToConsole(log);
                     return this.serverLogService.log(log);
                 })
             )
             .subscribe(
                 () => console.log('Error logged on server'),
-                err => {
-                    console.log('Fail to send error log to server');
-                }
+                () => console.log('Fail to send error log to server')
             );       
     }
+
     private injectDependencies() {
         this.location = this.injector.get(LocationStrategy);
         this.userService = this.injector.get(UserService);
