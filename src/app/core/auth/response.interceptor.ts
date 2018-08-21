@@ -24,7 +24,7 @@ export class ResponseInterceptor implements HttpInterceptor {
                 if (err instanceof HttpErrorResponse 
                         && err.status == 401
                         && !this.userService.isLogged()) {
-                    // can have an expiredToken, so clean it
+                    //  can have an expiredToken, so clean it
                     this.userService.discartToken();
                     // aumentar tempo e alinhamento
                     this.alertService.warning('Session timeout, please login.', true);
