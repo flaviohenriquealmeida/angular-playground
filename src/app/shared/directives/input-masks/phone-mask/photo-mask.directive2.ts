@@ -2,7 +2,7 @@ import { Directive, HostListener } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 const expression = /\D/g;
-
+// without [ngModel], recebe o erro de no provider por ngControl
 @Directive({
     selector: '[ngModel][ap-phone-mask2]'
 })
