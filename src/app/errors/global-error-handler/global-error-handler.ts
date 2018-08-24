@@ -9,15 +9,19 @@ import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { UserService } from "../../core/user/user.service";
 import { ServerLogService } from "./server-log.service";
 
+const groupColor = 'color: red; font-weight: bold';
+
 const stackAsArrayToString = (stackAsArray: StackTrace.StackFrame[]) => 
     stackAsArray.map(sf => sf.toString()).join('\n');
 
 const logToConsole = ({message, userName, acessedUrl, stackAsString}) => {
+    console.log('%cERROR MESSAGE:', groupColor);
     console.log(`%cERROR Error: ${message}`, 'font-size: 13px; font-weight: bold');
-    console.table({userName, acessedUrl});
+    console.log('%cSTACKTRACE', groupColor);
     console.log(stackAsString);
+    console.log('%cUSER INFO:', groupColor);
+    console.table({userName, acessedUrl});
 }
-
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -46,12 +50,12 @@ export class GlobalErrorHandler implements ErrorHandler {
 
         from(StackTrace.fromError(error))
             .pipe(map(stackAsArrayToString))
-            .pipe(withLatestFrom(this.userService.getUser()))
+            .pipe(withLatestFrom(this.userService.getUser$()))
             .pipe(
                 switchMap(([stackAsString, user]) =>  {
                     const log = { 
                         message, 
-                        userName: user.name, 
+                        userName: user ? user.name : 'not logged', 
                         acessedUrl, 
                         stackAsString
                     };
@@ -64,7 +68,7 @@ export class GlobalErrorHandler implements ErrorHandler {
                 () => console.log('Fail to send error log to server')
             );       
     }
-
+    
     private injectDependencies() {
         this.location = this.injector.get(LocationStrategy);
         this.userService = this.injector.get(UserService);

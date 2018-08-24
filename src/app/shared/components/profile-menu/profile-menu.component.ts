@@ -17,7 +17,7 @@ export class ProfileMenuComponent {
     constructor(
         private userService: UserService, 
         private router:Router) {
-        this.user$ = userService.getUser();
+        this.user$ = userService.getUser$();
     }
 
     logout() {

@@ -41,7 +41,7 @@ export class PhotoDetailsComponent implements OnInit {
     remove() {
         this.photoService
             .removePhoto(this.photoId)
-            .pipe(switchMap(() => this.userService.getUser()))
+            .pipe(switchMap(() => this.userService.getUser$()))
             .subscribe(
                 user => {
                     this.alertService.success("Photo removed", true);

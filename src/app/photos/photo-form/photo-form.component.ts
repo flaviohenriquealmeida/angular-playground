@@ -42,7 +42,7 @@ export class PhotoFormComponent implements OnInit {
     this.photoService
       .upload(description, allowComments, this.file)
       .pipe(finalize(() => {
-        this.userService.getUser().subscribe(user => {
+        this.userService.getUser$().subscribe(user => {
           this.router.navigate(['/user', user.name]);
         });
       }))

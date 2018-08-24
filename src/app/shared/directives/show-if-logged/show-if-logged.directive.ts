@@ -19,7 +19,7 @@ export class ShowIfLoggedDirective implements OnInit {
     ngOnInit(): void {
         
         this.currentDisplay = getComputedStyle(this.element.nativeElement).display;
-        this.userService.getUser().subscribe(user => {
+        this.userService.getUser$().subscribe(user => {
             if(user) {
                 this.renderer.setStyle(this.element.nativeElement, 'display', this.currentDisplay);
             } else {

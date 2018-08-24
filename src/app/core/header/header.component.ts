@@ -17,6 +17,6 @@ export class HeaderComponent {
         private userService: UserService, 
         private router:Router) {
 
-        this.user$ = userService.getUser();
+        this.user$ = userService.getUser$();
     }
 }

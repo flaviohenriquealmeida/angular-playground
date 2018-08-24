@@ -5,7 +5,7 @@ const expression = /\D/g;
 // without [ngModel], recebe o erro de no provider por ngControl se o componente não definir ngModel
 // além disso, se ele não definir, não funciona a máscara.
 @Directive({
-    selector: '[ngModel][ap-phone-mask2]'
+    selector: '[ap-phone-mask2]'
 })
 export class PhoneMaskDirective2 {
     constructor(public model: NgControl) { }

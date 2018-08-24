@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TokenService } from '../token/token.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from './user';
 import * as jtw_decode from 'jwt-decode';
 import { AlertService } from '../../shared/components/alert/alert.service';
@@ -10,10 +10,13 @@ export class UserService {
 
     private userSubject = new BehaviorSubject<User>(null);
     private user: User; 
+    private user$: Observable<User>;
 
     constructor(
         private tokenService: TokenService,
         private alertService: AlertService) { 
+
+        this.user$ = this.userSubject.asObservable();
 
         if(this.tokenService.hasToken()) {
             if(tokenService.hasExpired()) {
@@ -30,8 +33,8 @@ export class UserService {
         this.decodeAndNotify();
     }
 
-    getUser() {
-        return this.userSubject.asObservable();
+    getUser$() {
+        return this.user$;
     }
 
     private decodeAndNotify() {
