@@ -11,4 +11,5 @@
     <input #userName="ngModel" name="userName" [(ngModel)]="text" lowerCase>
     {{ text }}
     <p *ngIf="userName?.errors?.lowerCase">Text must be in lowercase</p>
+    <input ap-phone-mask2 [(ngModel)]="phone" name="phone">
 </form>

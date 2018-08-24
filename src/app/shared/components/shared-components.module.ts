@@ -13,7 +13,7 @@ import { DialogDirective } from './dialog/dialog.directive';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
-import { RouterModule } from '../../../../node_modules/@angular/router';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [

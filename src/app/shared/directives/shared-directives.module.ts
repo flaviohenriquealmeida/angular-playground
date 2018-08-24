@@ -1,19 +1,26 @@
 import { NgModule } from '@angular/core';
+
 import { DarkenOnHoverDirective } from './darken-on-hover/darken-on-hover.directive';
 import { ImmediateClickDirective } from './immediate-click/immediate-click.directive';
 import { ShowIfLoggedDirective } from './show-if-logged/show-if-logged.directive';
-import { CommonModule } from '@angular/common';
+import { PhoneMaskDirective } from './input-masks/phone-mask/photo-mask.directive';
+import { PhoneMaskDirective2 } from './input-masks/phone-mask/photo-mask.directive2';
+
 
 @NgModule({
     declarations: [
         DarkenOnHoverDirective,
         ImmediateClickDirective,
-        ShowIfLoggedDirective
+        ShowIfLoggedDirective,
+        PhoneMaskDirective,
+        PhoneMaskDirective2
     ],
     exports: [
         DarkenOnHoverDirective,
         ImmediateClickDirective,
         ShowIfLoggedDirective,
+        PhoneMaskDirective,
+        PhoneMaskDirective2
     ]
 })
 export class SharedDirectiveModule {}
