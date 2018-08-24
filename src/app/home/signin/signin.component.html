@@ -6,11 +6,13 @@
 <form [formGroup]="loginForm" class="form mt-4" (submit)="login()">
 
     <div class="form-group">
-        <input #userNameInput
-            formControlName="userName" 
+        <input 
+            #userNameInput
+            [attr.aria-required]="loginForm.get('password').errors?.required"
+            autofocus
             class="form-control" 
-            placeholder="user name" 
-            autofocus>
+            formControlName="userName" 
+            placeholder="user name">
         <ap-vmessage 
             *ngIf="loginForm.get('userName').errors?.required"
             text="User name is required!">
@@ -19,10 +21,11 @@
 
     <div class="form-group">
         <input
-            formControlName="password" 
-            type="password" 
+            [attr.aria-required]="loginForm.get('password').errors?.required"
             class="form-control" 
-            placeholder="password">
+            formControlName="password" 
+            placeholder="password"
+            type="password">
         <ap-vmessage
             *ngIf="loginForm.get('password').errors?.required"
             text="Password is required!">
@@ -30,9 +33,10 @@
     </div>
 
     <button 
+        [attr.aria-disabled]="loginForm.invalid"
         [disabled]="loginForm.invalid" 
-        type="submit" 
-        class="btn btn-primary btn-block">
+        class="btn btn-primary btn-block"
+        type="submit">
         login
     </button>
 

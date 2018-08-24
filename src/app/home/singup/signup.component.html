@@ -2,7 +2,16 @@
 
 <form #form="ngForm" [formGroup]="signupForm" class="form mt-4" (submit)="signup()">
     <div class="form-group">
-        <input #emailInput formControlName="email" class="form-control" placeholder="email" autofocus>
+        <input 
+            #emailInput 
+            [attr.aria-required]="signupForm.get('email').errors?.required"
+            [attr.aria-invalid]="signupForm.get('email').errors?.email"
+            aria-label="email"
+            autofocus
+            class="form-control" 
+            formControlName="email" 
+            placeholder="email" 
+            >
         <ap-vmessage 
             *ngIf="signupForm.get('email').errors?.required && (form.submitted || signupForm.get('email').touched)"
             text="Email is required!">
@@ -14,7 +23,13 @@
     </div>
 
     <div class="form-group">
-        <input formControlName="fullName" class="form-control" placeholder="full name">
+        <input 
+            [attr.aria-required]="signupForm.get('fullName').errors?.required"
+            [attr.aria-invalid]="signupForm.get('fullName').errors?.minlength || signupForm.get('fullName').errors?.maxlength"
+            aria-label="full name"
+            class="form-control" 
+            formControlName="fullName" 
+            placeholder="full name">
         <ap-vmessage 
             *ngIf="signupForm.get('fullName').errors?.required && (form.submitted || signupForm.get('fullName').touched)"
             text="Full name is required!">
@@ -30,7 +45,13 @@
     </div>
 
     <div class="form-group">
-        <input formControlName="userName" class="form-control" placeholder="user name">
+        <input 
+            [attr.aria-required]="signupForm.get('userName').errors?.required"
+            [attr.aria-invalid]="signupForm.get('userName').errors?.minlength || signupForm.get('userName').errors?.maxlength || signupForm.get('userName').errors?.lowerCase || signupForm.get('userName').errors?.userNameTaken"
+            aria-label="user name"
+            class="form-control" 
+            formControlName="userName" 
+            placeholder="user name">
         <ap-vmessage 
             *ngIf="signupForm.get('userName').errors?.required&& (form.submitted || signupForm.get('userName').touched)"
             text="User name is required!">
@@ -56,7 +77,14 @@
     </div>
 
     <div class="form-group">
-        <input formControlName="password" type="password" class="form-control" placeholder="password">
+        <input 
+            [attr.aria-required]="signupForm.get('password').errors?.required"
+            [attr.aria-invalid]="signupForm.get('password').errors?.minlength || signupForm.get('password').errors?.maxlength || signupForm.errors?.userNamePassword && form.submitted"        
+            aria-label="password"
+            class="form-control" 
+            formControlName="password" 
+            placeholder="password"
+            type="password">
         <ap-vmessage 
             *ngIf="signupForm.get('password').errors?.required && (form.submitted || signupForm.get('password').touched)"
             text="Password is required!">
