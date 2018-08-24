@@ -9,7 +9,6 @@ import { AlertService } from '../../shared/components/alert/alert.service';
 export class UserService { 
 
     private userSubject = new BehaviorSubject<User>(null);
-    private user: User; 
     private user$: Observable<User>;
 
     constructor(
@@ -39,14 +38,13 @@ export class UserService {
 
     private decodeAndNotify() {
         const token = this.tokenService.getToken();
-        this.user = jtw_decode(token) as User;
-        this.userSubject.next(this.user);
+        const user = jtw_decode(token) as User;
+        this.userSubject.next(user);
     }
 
     discartToken() {
         this.tokenService.removeToken();
-        this.user = null;
-        this.userSubject.next(this.user);
+        this.userSubject.next(null);
     }
 
     isLogged() {
