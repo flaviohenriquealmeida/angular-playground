@@ -29,7 +29,8 @@ import { RouterModule } from '@angular/router';
         ProfileMenuComponent
     ],
     entryComponents: [
-        DialogComponent
+        DialogComponent,
+        ConfirmDialogComponent
     ],
     exports: [
         AlertComponent,

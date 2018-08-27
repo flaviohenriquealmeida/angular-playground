@@ -15,12 +15,8 @@ export class DomService {
       private injector: Injector
   ) { }
   
-  appendComponentToBody(component: any) {
-    // 1. Create a component reference from the component 
-    const componentRef = this.componentFactoryResolver
-      .resolveComponentFactory(component)
-      .create(this.injector);
-    
+  appendComponentToBody(componentRef: any) {
+
     // 2. Attach component to the appRef so that it's inside the ng component tree
     this.appRef.attachView(componentRef.hostView);
     
@@ -30,11 +26,13 @@ export class DomService {
     
     // 4. Append DOM element to the body
     document.body.appendChild(domElem);
-    
-    // 5. Wait some time and remove it from the component tree and from the DOM
-    setTimeout(() => {
-        this.appRef.detachView(componentRef.hostView);
-        componentRef.destroy();
-    }, 3000);
+    console.log(domElem);
+  }
+
+  getComponentRef(clazz: any) {
+    // 1. Create a component reference from the component 
+    return this.componentFactoryResolver
+      .resolveComponentFactory(clazz)
+      .create(this.injector);
   }
 }

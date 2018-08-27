@@ -12,6 +12,8 @@ export class ConfirmDialogComponent {
     
     @Input() message = 'Are you sure?';
     @Output() onConfirm = new EventEmitter<void>();
+    @Output() onDismiss = new EventEmitter<void>();
+
     @ViewChild('buttonConfirm') firstFocusableEl: ElementRef<HTMLButtonElement>;
     @ViewChild('buttonDismiss') lastFocusableEl: ElementRef<HTMLButtonElement>;
     
@@ -22,10 +24,6 @@ export class ConfirmDialogComponent {
         this.onConfirm.emit();
     }
 
-    cancel() {
-        this.dismiss();
-    }
-    
     show() {
         this.scrollService.disableScrolling();
         this.lastFocusableEl.nativeElement.focus();
@@ -35,20 +33,15 @@ export class ConfirmDialogComponent {
     dismiss() {
        this.isShown = false;
        this.scrollService.enableScrolling();
+       this.onDismiss.emit();
     }
 
-    
     handleTab(event: any) {        
         console.log(this.firstFocusableEl);
         const isTabPressed = event.key === 'Tab';
         const isShiftPressed = event.shiftKey;
-  
-        console.log('tab', isTabPressed);
-        console.log('shigt', isShiftPressed);
 
-        if (!isTabPressed) { 
-            return; 
-        }
+        if (!isTabPressed) return; 
         
         if(event.shiftKey) { // SHIFT + TAB
             if(document.activeElement === this.firstFocusableEl.nativeElement) {

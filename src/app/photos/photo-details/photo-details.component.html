@@ -1,4 +1,3 @@
-<ap-confirm-dialog #dialog (onConfirm)="remove()"></ap-confirm-dialog>
 <div class="bg-white border" *ngIf="(photo$ | async) as photo">
     <div class="row">
         <div class="col-lg-8">
@@ -11,7 +10,7 @@
                 <div class="text-left mb-4">
                     <i (click)="like(photo)" showIfLogged class="fa fa-heart-o fa-2x mr-2 pull-left"></i>{{ photo.likes }}                    
                     <i class="fa fa-comment-o fa-2x mr-2 ml-2"></i>{{ photo.comments + commentsCountFromCurrentUser}}                    
-                    <i photoOwnerOnly [ownedPhoto]="photo" (click)="dialog.show()" class="fa fa-trash-o fa-2x pull-right"></i>
+                    <i photoOwnerOnly [ownedPhoto]="photo" (click)="remove()" class="fa fa-trash-o fa-2x pull-right"></i>
                 </div>                
                 <hr>
             </small>

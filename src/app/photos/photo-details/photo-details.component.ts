@@ -8,6 +8,7 @@ import { Photo } from "../photo/photo";
 import { AlertService } from "../../shared/components/alert/alert.service";
 import { UserService } from "../../core/user/user.service";
 import { PhotoComment } from '../photo/photo-comment';
+import { ConfirmDialogService } from '../../shared/components/confirm-dialog/confirm-dialog.service';
 
 @Component({
     templateUrl: './photo-details.component.html'
@@ -24,7 +25,8 @@ export class PhotoDetailsComponent implements OnInit {
         private photoService: PhotoService,
         private router: Router,
         private alertService: AlertService,
-        private userService: UserService
+        private userService: UserService,
+        private confirmDialogService: ConfirmDialogService 
     ) {}
 
     ngOnInit(): void {
@@ -39,18 +41,22 @@ export class PhotoDetailsComponent implements OnInit {
     }
 
     remove() {
-        this.photoService
-            .removePhoto(this.photoId)
-            .pipe(switchMap(() => this.userService.getUser$()))
-            .subscribe(
-                user => {
-                    this.alertService.success("Photo removed", true);
-                    this.router.navigate(['/user', user.name], { replaceUrl: true });
-                },
-                err => {
-                    console.log(err);
-                    this.alertService.warning('Could not delete the photo!', true);
-                });
+        this.confirmDialogService.open({
+            onConfirm: () => {
+                this.photoService
+                .removePhoto(this.photoId)
+                .pipe(switchMap(() => this.userService.getUser$()))
+                .subscribe(
+                    user => {
+                        this.alertService.success("Photo removed", true);
+                        this.router.navigate(['/user', user.name], { replaceUrl: true });
+                    },
+                    err => {
+                        console.log(err);
+                        this.alertService.warning('Could not delete the photo!', true);
+                    });                
+            }
+        }); 
     }
 
     like(photo: Photo) {
