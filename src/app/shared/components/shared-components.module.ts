@@ -8,12 +8,11 @@ import { LoadingComponent } from './loading/loading.component';
 import { MenuComponent } from './menu/menu.component';
 import { VMessageComponent } from './vmessage/vmessage.component';
 import { LoadingInterceptor } from './loading/loading.interceptor';
-import { DialogComponent } from './dialog/dialog.component';
-import { DialogDirective } from './dialog/dialog.directive';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { RouterModule } from '@angular/router';
+import { ConnectionStatusComponent } from './connection-status/connection-status.component';
 
 @NgModule({
     declarations: [
@@ -22,15 +21,14 @@ import { RouterModule } from '@angular/router';
         LoadingComponent,
         MenuComponent,
         VMessageComponent,
-        DialogComponent,
-        DialogDirective,
         ConfirmDialogComponent,
         AvatarComponent,
-        ProfileMenuComponent
+        ProfileMenuComponent,
+        ConnectionStatusComponent
     ],
     entryComponents: [
-        DialogComponent,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        ConnectionStatusComponent
     ],
     exports: [
         AlertComponent,
@@ -38,11 +36,9 @@ import { RouterModule } from '@angular/router';
         LoadingComponent,
         MenuComponent,
         VMessageComponent,
-        DialogComponent,
-        DialogDirective,
-        ConfirmDialogComponent,
         AvatarComponent,
-        ProfileMenuComponent
+        ProfileMenuComponent,
+        ConnectionStatusComponent
     ],
     imports: [
         CommonModule,

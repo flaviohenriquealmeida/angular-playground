@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlatformDetectorService } from '../../core/plataform-detector/platform-detector.service';
 
 import { AuthService } from '../../core/auth/auth.service';
-import { DialogDirective } from '../../shared/components/dialog/dialog.directive';
 import { AlertService } from '../../shared/components/alert/alert.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class SignInComponent implements OnInit {
     fromUrl: string;
     loginForm: FormGroup;
     @ViewChild('userNameInput') userNameInput: ElementRef<HTMLInputElement>;
-    @ViewChild(DialogDirective) dialogAnchor: DialogDirective;
   
     constructor(
         private formBuilder: FormBuilder,
@@ -59,9 +57,5 @@ export class SignInComponent implements OnInit {
                         this.alerService.danger('Invalid user name or password');
                 }
             );
-    }
-
-    openDialogBox() {
-        this.dialogAnchor.createDialog();
     }
 }
