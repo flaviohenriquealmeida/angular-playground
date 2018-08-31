@@ -5,6 +5,7 @@ import { ImmediateClickDirective } from './immediate-click/immediate-click.direc
 import { ShowIfLoggedDirective } from './show-if-logged/show-if-logged.directive';
 import { PhoneMaskDirective } from './input-masks/phone-mask/photo-mask.directive';
 import { PhoneMaskDirective2 } from './input-masks/phone-mask/photo-mask.directive2';
+import { ScrollableDirective } from './scrollable/scrollable.directive';
 
 
 @NgModule({
@@ -13,14 +14,16 @@ import { PhoneMaskDirective2 } from './input-masks/phone-mask/photo-mask.directi
         ImmediateClickDirective,
         ShowIfLoggedDirective,
         PhoneMaskDirective,
-        PhoneMaskDirective2
+        PhoneMaskDirective2,
+        ScrollableDirective
     ],
     exports: [
         DarkenOnHoverDirective,
         ImmediateClickDirective,
         ShowIfLoggedDirective,
         PhoneMaskDirective,
-        PhoneMaskDirective2
+        PhoneMaskDirective2,
+        ScrollableDirective
     ]
 })
 export class SharedDirectiveModule {}

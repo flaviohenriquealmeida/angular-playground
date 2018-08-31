@@ -1,14 +1,9 @@
-<div #dynamicComponentPlaceHolder></div>
-<ap-search 
-    (onTyping)="filter = $event" [value]="filter">
-</ap-search>
+<div style="overflow: scroll; height: 100vh" ap-scrollable (scrollPosition)="load($event)">
+    <ap-search 
+        (onTyping)="filter = $event" [value]="filter">
+    </ap-search>
 
-<ap-photos 
-    [photos]="photos | filterByDescription: filter">
-</ap-photos>
-
-<ap-load-button 
-    (click)="load()" 
-    [hasMore]="hasMore">
-</ap-load-button>
-
+    <ap-photos 
+        [photos]="photos | filterByDescription: filter">
+    </ap-photos>
+</div>
