@@ -6,6 +6,8 @@
 
         <div class="col-lg-4 p-4">
             <small>
+                <ap-avatar [userName]="photo.userName"></ap-avatar>
+                <hr>
                 <p class="text-left break-word">{{ photo.description }}</p>
                 <div class="text-left mb-4">
                     <i (click)="like(photo)" showIfLogged class="fa fa-heart-o fa-2x mr-2 pull-left"></i>{{ photo.likes }}                    
@@ -14,12 +16,13 @@
                 </div>                
                 <hr>
             </small>
-
+            
             <ap-photo-comments 
                 *ngIf="photo.allowComments; else warnning"
                 (onAdd)="addComment($event)"
                 [comments]="comments$ | async">
             </ap-photo-comments>
+            
             <ng-template #warnning>
                 <p>User has disabled comments for this photo</p>
             </ng-template>
