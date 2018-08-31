@@ -4,7 +4,7 @@ import { ScrollService } from '../../services/scroll.service';
 @Component({
     selector: 'ap-confirm-dialog',
     templateUrl: './confirm-dialog.component.html',
-    styleUrls: ['./confirm-dialog.component.css']
+    styleUrls: ['./confirm-dialog.component.scss']
 })
 export class ConfirmDialogComponent {
 

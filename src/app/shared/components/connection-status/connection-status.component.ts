@@ -6,7 +6,7 @@ import { ConnectionStatusService } from './connection-status-service';
 @Component({
     selector: 'ap-connection-status',
     templateUrl: './connection-status.component.html',
-    styleUrls: ['./connection-status.component.css']
+    styleUrls: ['./connection-status.component.scss']
 })
 export class ConnectionStatusComponent implements OnInit {
 

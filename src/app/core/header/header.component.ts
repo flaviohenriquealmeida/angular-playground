@@ -6,8 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'ap-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css']
+    templateUrl: './header.component.html'
 })
 export class HeaderComponent { 
 

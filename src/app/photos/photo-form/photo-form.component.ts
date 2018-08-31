@@ -10,8 +10,7 @@ import { UserService } from '../../core/user/user.service';
 
 @Component({
   selector: 'ap-photo-form',
-  templateUrl: './photo-form.component.html',
-  styleUrls: ['./photo-form.component.css']
+  templateUrl: './photo-form.component.html'
 })
 export class PhotoFormComponent implements OnInit {
 

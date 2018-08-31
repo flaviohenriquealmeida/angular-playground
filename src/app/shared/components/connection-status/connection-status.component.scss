@@ -1,14 +1,21 @@
 .connection-status-panel {
-    margin: 0 auto;
+    position: relative;
+    width: 50%;
+    top: -100px;
+    margin: 2px auto;
     text-align: center;
-    padding: 0.5em;
+    transition: 0.5s;
+}
+
+.connection-status-panel.active {
+    top: 0;
 }
 
 .connection-message {
     padding: 0.5em;
     margin: 0;
-    transition: 0.3s;
     box-shadow: 1px 1px 5px black;
+    transition: 0.3s;
 }
 
 .connection-offline {

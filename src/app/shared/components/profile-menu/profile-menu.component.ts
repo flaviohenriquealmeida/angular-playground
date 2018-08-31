@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'ap-profile-menu',
     templateUrl: './profile-menu.component.html',
-    styleUrls: ['./profile-menu.component.css']
+    styleUrls: ['./profile-menu.component.scss']
 })
 export class ProfileMenuComponent { 
 

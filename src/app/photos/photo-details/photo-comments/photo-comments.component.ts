@@ -9,7 +9,7 @@ import { PhotoComment } from "../../photo/photo-comment";
 @Component({
     selector: 'ap-photo-comments',
     templateUrl: './photo-comments.component.html',
-    styleUrls: ['photo-comments.css']
+    styleUrls: ['photo-comments.scss']
 })
 export class PhotoCommentsComponent implements OnInit { 
 

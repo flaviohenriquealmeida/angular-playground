@@ -4,8 +4,7 @@ import { Photo } from '../../photo/photo';
 
 @Component({
   selector: 'ap-photos',
-  templateUrl: './photos.component.html',
-  styleUrls: ['./photos.component.css']
+  templateUrl: './photos.component.html'
 })
 export class PhotosComponent implements OnChanges {
   
