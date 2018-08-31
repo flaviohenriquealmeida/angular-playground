@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Photo } from '../photo/photo';
 import { PhotoService } from '../photo/photo.service';
+import { tap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-photo-list',
@@ -11,10 +12,11 @@ import { PhotoService } from '../photo/photo.service';
 export class PhotoListComponent implements OnInit {
 
   photos: Photo[] = [];
-  filter: string = '';
-  hasMore: boolean = true;
-  currentPage: number = 1;
-  userName: string = '';
+  filter = '';
+  hasMore = true;
+  currentPage = 1;
+  userName = '';
+  loading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,13 +31,17 @@ export class PhotoListComponent implements OnInit {
   }
 
   load(event) {
-    if(event != 'bottom') return;
-    this.photoService
-      .listFromUserPaginated(this.userName, ++this.currentPage)
-      .subscribe(photos => {
-        this.filter = '';
-        this.photos = this.photos.concat(photos);
-        if(!photos.length) this.hasMore = false;
-      });
+    if (event != 'bottom') return;
+    if (this.hasMore) {
+      this.loading = true
+      this.photoService
+        .listFromUserPaginated(this.userName, ++this.currentPage)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(photos => {
+          this.filter = '';
+          this.photos = this.photos.concat(photos);
+          if (!photos.length) this.hasMore = false;
+        });
+    }
   }
 }
