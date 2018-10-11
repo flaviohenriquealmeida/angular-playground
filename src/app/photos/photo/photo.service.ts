@@ -20,13 +20,19 @@ export class PhotoService {
             .get<Photo[]>(API + '/' + userName + '/photos');       
     }
 
-    listFromUserPaginated(userName: string, page: number) {
-        const params = new HttpParams()
-            .append('page', page.toString());
+    getPaginator(userName: string, page: number = 1) {
 
-        return this.http
-            .get<Photo[]>(API + '/' + userName + '/photos', { params });       
-    } 
+        return () => {
+
+            const params = new HttpParams()
+                .append('page', page.toString());
+            
+            page++;
+            
+            return this.http
+                .get<Photo[]>(API + '/' + userName + '/photos', { params })   
+            };
+    }
     
     upload(description: string, allowComments: boolean, file: File) {
         

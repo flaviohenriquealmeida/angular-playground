@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Photo } from '../photo/photo';
 import { PhotoService } from '../photo/photo.service';
 import { tap, finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-photo-list',
@@ -14,9 +15,9 @@ export class PhotoListComponent implements OnInit {
   photos: Photo[] = [];
   filter = '';
   hasMore = true;
-  currentPage = 1;
   userName = '';
   loading = false;
+  photosPaginator: () => Observable<Photo[]>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -27,6 +28,7 @@ export class PhotoListComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.userName = params.userName;
       this.photos = this.activatedRoute.snapshot.data['photos'];
+      this.photosPaginator = this.photoService.getPaginator(this.userName, 2);
     });
   }
 
@@ -34,8 +36,7 @@ export class PhotoListComponent implements OnInit {
     if (event != 'bottom') return;
     if (this.hasMore) {
       this.loading = true
-      this.photoService
-        .listFromUserPaginated(this.userName, ++this.currentPage)
+      this.photosPaginator()
         .pipe(finalize(() => this.loading = false))
         .subscribe(photos => {
           this.filter = '';
