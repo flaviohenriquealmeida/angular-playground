@@ -3,7 +3,7 @@ import * as jtw_decode from 'jwt-decode';
 
 const KEY = 'authToken';
 
-@Injectable({ providedIn: 'root'})
+@Injectable()
 export class TokenService {
 
     hasToken() {
@@ -27,8 +27,8 @@ export class TokenService {
             const token = jtw_decode(this.getToken());
             const current_time = Date.now() / 1000;
             return token.exp < current_time
-        } 
+        }
         return false;
     }
-        
+
 }

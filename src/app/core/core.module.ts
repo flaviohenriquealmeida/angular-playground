@@ -6,6 +6,12 @@ import { RequestInterceptor } from './services/auth/request.interceptor';
 import { ResponseInterceptor } from './services/auth/response.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
 import { SharedModule } from '../shared/shared.module';
+import { AuthGuard } from './services/auth/auth.guard';
+import { AuthService } from './services/auth/auth.service';
+import { LoginGuard } from './services/auth/login.guard';
+import { PlatformDetectorService } from './services/plataform-detector/platform-detector.service';
+import { TokenService } from './services/token/token.service';
+import { UserService } from './services/user/user.service';
 
 
 @NgModule({
@@ -30,7 +36,13 @@ import { SharedModule } from '../shared/shared.module';
             provide: HTTP_INTERCEPTORS,
             useClass: ResponseInterceptor,
             multi: true
-        }
+        },
+        AuthGuard,
+        AuthService,
+        LoginGuard,
+        PlatformDetectorService,
+        TokenService,
+        UserService
     ]
 })
 export class CoreModule { }
