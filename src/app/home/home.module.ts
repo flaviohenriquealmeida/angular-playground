@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { SignInComponent } from './signin/signin.component';
 import { SignUpComponent } from './singup/singup.component';
@@ -8,12 +8,12 @@ import { SignUpService } from './singup/signup.service';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-    declarations: [ 
+    declarations: [
         SignInComponent,
         SignUpComponent,
         HomeComponent
     ],
-    imports: [ 
+    imports: [
         SharedModule,
         HomeRoutingModule
     ],
@@ -21,4 +21,10 @@ import { SharedModule } from '../shared/shared.module';
         SignUpService
     ]
 })
-export class HomeModule { }
+export class HomeModule {
+  static forRoot(): ModuleWithProviders<HomeModule> {
+    return {
+      ngModule: HomeModule
+    };
+  }
+}
