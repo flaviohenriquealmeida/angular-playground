@@ -1,5 +1,5 @@
 import { Directive, HostListener, EventEmitter, Output, ElementRef } from '@angular/core';
-import { PlatformDetectorService } from '../../../core/plataform-detector/platform-detector.service';
+import { PlatformDetectorService } from '../../../core/services/plataform-detector/platform-detector.service';
 
 @Directive({
     selector: '[ap-scrollable]'

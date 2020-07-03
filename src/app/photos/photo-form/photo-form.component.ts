@@ -6,7 +6,7 @@ import { finalize } from 'rxjs/operators';
 
 import { PhotoService } from '../photo/photo.service';
 import { AlertService } from '../../shared/components/alert/alert.service';
-import { UserService } from '../../core/user/user.service';
+import { UserService } from '../../core/services/user/user.service';
 
 @Component({
   selector: 'ap-photo-form',
@@ -57,7 +57,7 @@ export class PhotoFormComponent implements OnInit {
           console.log(err);
           this.alertService.danger('Upload error!', true);
         });
-        
+
   }
 
   handleFile(file: File) {

@@ -3,17 +3,17 @@ import { TokenService } from '../token/token.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from './user';
 import * as jtw_decode from 'jwt-decode';
-import { AlertService } from '../../shared/components/alert/alert.service';
+import { AlertService } from '../../../shared/components/alert/alert.service';
 
 @Injectable({ providedIn: 'root'})
-export class UserService { 
+export class UserService {
 
     private userSubject = new BehaviorSubject<User>(null);
     private user$: Observable<User>;
 
     constructor(
         private tokenService: TokenService,
-        private alertService: AlertService) { 
+        private alertService: AlertService) {
 
         this.user$ = this.userSubject.asObservable();
 

@@ -1,13 +1,13 @@
 import { Directive, Renderer2, OnInit } from "@angular/core";
 import { ElementRef } from "@angular/core";
 
-import { UserService } from "../../../core/user/user.service";
+import { UserService } from "../../../core/services/user/user.service";
 
 @Directive({
     selector: '[showIfLogged]'
 })
-export class ShowIfLoggedDirective implements OnInit { 
-    
+export class ShowIfLoggedDirective implements OnInit {
+
     currentDisplay: string;
 
     constructor(
@@ -17,7 +17,7 @@ export class ShowIfLoggedDirective implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        
+
         this.currentDisplay = getComputedStyle(this.element.nativeElement).display;
         this.userService.getUser$().subscribe(user => {
             if(user) {

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { HeaderComponent } from './header/header.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { RequestInterceptor } from './auth/request.interceptor';
-import { ResponseInterceptor } from './auth/response.interceptor';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { RequestInterceptor } from './services/auth/request.interceptor';
+import { ResponseInterceptor } from './services/auth/response.interceptor';
+import { FooterComponent } from './components/footer/footer.component';
 import { SharedModule } from '../shared/shared.module';
 
 

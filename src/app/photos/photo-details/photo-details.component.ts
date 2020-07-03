@@ -6,14 +6,14 @@ import { switchMap, tap } from 'rxjs/operators';
 import { PhotoService } from "../photo/photo.service";
 import { Photo } from "../photo/photo";
 import { AlertService } from "../../shared/components/alert/alert.service";
-import { UserService } from "../../core/user/user.service";
+import { UserService } from "../../core/services/user/user.service";
 import { PhotoComment } from '../photo/photo-comment';
 import { ConfirmDialogService } from '../../shared/components/confirm-dialog/confirm-dialog.service';
 
 @Component({
     templateUrl: './photo-details.component.html'
 })
-export class PhotoDetailsComponent implements OnInit { 
+export class PhotoDetailsComponent implements OnInit {
 
     photo$: Observable<Photo>;
     comments$: Observable<PhotoComment[]>
@@ -26,7 +26,7 @@ export class PhotoDetailsComponent implements OnInit {
         private router: Router,
         private alertService: AlertService,
         private userService: UserService,
-        private confirmDialogService: ConfirmDialogService 
+        private confirmDialogService: ConfirmDialogService
     ) {}
 
     ngOnInit(): void {
@@ -54,9 +54,9 @@ export class PhotoDetailsComponent implements OnInit {
                     err => {
                         console.log(err);
                         this.alertService.warning('Could not delete the photo!', true);
-                    });                
+                    });
             }
-        }); 
+        });
     }
 
     like(photo: Photo) {

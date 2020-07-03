@@ -1,21 +1,22 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../../core/user/user.service';
 import { Observable } from 'rxjs';
-import { User } from '../../../core/user/user';
 import { Router } from '@angular/router';
+
+import { UserService } from '../../../core/services/user/user.service';
+import { User } from '../../../core/services/user/user';
 
 @Component({
     selector: 'ap-profile-menu',
     templateUrl: './profile-menu.component.html',
     styleUrls: ['./profile-menu.component.scss']
 })
-export class ProfileMenuComponent { 
+export class ProfileMenuComponent {
 
     isShown = false;
 
     user$: Observable<User>
     constructor(
-        private userService: UserService, 
+        private userService: UserService,
         private router:Router) {
         this.user$ = userService.getUser$();
     }

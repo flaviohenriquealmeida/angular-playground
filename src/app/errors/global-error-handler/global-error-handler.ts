@@ -6,12 +6,12 @@ import { environment } from '../../../environments/environment';
 import { from } from 'rxjs';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
-import { UserService } from "../../core/user/user.service";
+import { UserService } from "../../core/services/user/user.service";
 import { ServerLogService } from "./server-log.service";
 
 const groupColor = 'color: red; font-weight: bold';
 
-const stackAsArrayToString = (stackAsArray: StackTrace.StackFrame[]) => 
+const stackAsArrayToString = (stackAsArray: StackTrace.StackFrame[]) =>
     stackAsArray.map(sf => sf.toString()).join('\n');
 
 const logToConsole = ({message, userName, acessedUrl, stackAsString}) => {
@@ -38,12 +38,12 @@ export class GlobalErrorHandler implements ErrorHandler {
 
         if(!this.dependenciesInjected) this.injectDependencies();
 
-        const acessedUrl = this.location instanceof PathLocationStrategy 
-            ? this.location.path() 
-            : ''; 
+        const acessedUrl = this.location instanceof PathLocationStrategy
+            ? this.location.path()
+            : '';
 
-        const message = error.message 
-            ? error.message : 
+        const message = error.message
+            ? error.message :
             error.toString();
 
         if(environment.production) this.router.navigate(['/error']);
@@ -53,10 +53,10 @@ export class GlobalErrorHandler implements ErrorHandler {
             .pipe(withLatestFrom(this.userService.getUser$()))
             .pipe(
                 switchMap(([stackAsString, user]) =>  {
-                    const log = { 
-                        message, 
-                        userName: user ? user.name : 'not logged', 
-                        acessedUrl, 
+                    const log = {
+                        message,
+                        userName: user ? user.name : 'not logged',
+                        acessedUrl,
                         stackAsString
                     };
                     logToConsole(log);
@@ -66,9 +66,9 @@ export class GlobalErrorHandler implements ErrorHandler {
             .subscribe(
                 () => console.log('Error logged on server'),
                 () => console.log('Fail to send error log to server')
-            );       
+            );
     }
-    
+
     private injectDependencies() {
         this.location = this.injector.get(LocationStrategy);
         this.userService = this.injector.get(UserService);
