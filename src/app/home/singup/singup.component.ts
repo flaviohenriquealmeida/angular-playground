@@ -16,7 +16,7 @@ import { userNamePassword } from './username-password.validator';
 export class SignUpComponent implements OnInit {
     
     signupForm: FormGroup;
-    @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>;
+    @ViewChild('emailInput', { static: true }) emailInput: ElementRef<HTMLInputElement>;
     
     constructor(
         private formBuilder: FormBuilder,

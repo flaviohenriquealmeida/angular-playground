@@ -14,8 +14,8 @@ export class ConfirmDialogComponent {
     @Output() onConfirm = new EventEmitter<void>();
     @Output() onDismiss = new EventEmitter<void>();
 
-    @ViewChild('buttonConfirm') firstFocusableEl: ElementRef<HTMLButtonElement>;
-    @ViewChild('buttonDismiss') lastFocusableEl: ElementRef<HTMLButtonElement>;
+    @ViewChild('buttonConfirm', { static: true }) firstFocusableEl: ElementRef<HTMLButtonElement>;
+    @ViewChild('buttonDismiss', { static: true }) lastFocusableEl: ElementRef<HTMLButtonElement>;
     
     isShown = false;
     
