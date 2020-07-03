@@ -16,15 +16,13 @@ import { SharedModule } from '../shared/shared.module';
     imports: [
         SharedModule,
         HomeRoutingModule
-    ],
-    providers: [
-        SignUpService
     ]
 })
 export class HomeModule {
   static forRoot(): ModuleWithProviders<HomeModule> {
     return {
-      ngModule: HomeModule
+      ngModule: HomeModule,
+      providers: [SignUpService]
     };
   }
 }
