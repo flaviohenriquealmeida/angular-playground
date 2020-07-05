@@ -21,6 +21,7 @@
     "@angular/router": "^10.0.2",
     "@ngrx/schematics": "^9.2.0",
     "@ngrx/store": "^9.2.0",
+    "@ngrx/store-devtools": "^9.2.0",
     "@types/stacktrace-js": "0.0.32",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
