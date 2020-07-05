@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app.routing.module';
 import { ErrorsModule } from './errors/errors.module';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,10 @@ import { HomeModule } from './home/home.module';
     ErrorsModule,
     CoreModule,
     AppRoutingModule,
-    HomeModule.forRoot()
+    HomeModule.forRoot(),
+    StoreModule.forRoot(reducers, {
+      metaReducers
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

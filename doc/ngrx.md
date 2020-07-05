@@ -2,10 +2,42 @@
 
 ```
 ng add @ngrx/schematics (answer yes to add as default collection)
-
+ng add @ngrx/store@latest --minimal false (@9.2 is not working to get the 9.2 version)
 ```
 
-The command `ng add @ngrx/store` will install the module and also will modify `app.module.ts` to import the module `StoreModule.forRoot({}, {})`.
+The command `ng add @ngrx/store` will install the module and also will modify `app.module.ts` to import the module:
+
+```javascript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+
+import { AppRoutingModule } from './app.routing.module';
+import { ErrorsModule } from './errors/errors.module';
+import { CoreModule } from './core/core.module';
+import { HomeModule } from './home/home.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    ErrorsModule,
+    CoreModule,
+    AppRoutingModule,
+    HomeModule.forRoot(),
+    StoreModule.forRoot(reducers, {
+      metaReducers
+    })
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
 We can say the store is a in memory database. We don't have any database and we will able to check by installing the module `ng add @ngrx/store-devtools`. The command will also modify the application root module:
 
