@@ -1,5 +1,10 @@
 ## Adding NgRx to your existing application
 
+```
+ng add @ngrx/schematics (answer yes to add as default collection)
+
+```
+
 The command `ng add @ngrx/store` will install the module and also will modify `app.module.ts` to import the module `StoreModule.forRoot({}, {})`.
 
 We can say the store is a in memory database. We don't have any database and we will able to check by installing the module `ng add @ngrx/store-devtools`. The command will also modify the application root module:

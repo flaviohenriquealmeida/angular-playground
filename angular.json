@@ -39,7 +39,7 @@
               "jwt-decode",
               "stacktrace-gps",
               "stack-generator"
-           ]
+            ]
           },
           "configurations": {
             "production": {
@@ -132,6 +132,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "alurapic"
+    }
+  },
+  "defaultProject": "alurapic",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
