@@ -6,6 +6,8 @@ import { PhotoListModule } from './photo-list/photo-list.module';
 import { PhotoDetailsModule } from './photo-details/photo-details.module';
 import { PhotosRoutingModule } from './photos.routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import * as fromPhotos from './reducers';
 
 @NgModule({
     imports: [ 
@@ -13,7 +15,8 @@ import { SharedModule } from '../shared/shared.module';
         PhotoFormModule,
         PhotoListModule,
         PhotoDetailsModule,
-        PhotosRoutingModule
+        PhotosRoutingModule,
+        StoreModule.forFeature(fromPhotos.photosFeatureKey, fromPhotos.reducers, { metaReducers: fromPhotos.metaReducers })
     ]
 })
 export class PhotosModule {}

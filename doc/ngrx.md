@@ -3,53 +3,14 @@
 ```
 ng add @ngrx/schematics (answer yes to add as default collection)
 ng add @ngrx/store@latest --minimal false (@9.2 is not working to get the 9.2 version)
+ng add @ngrx/store-devtools
 ```
-
-The command `ng add @ngrx/store` will install the module and also will modify `app.module.ts` to import the module:
-
-```javascript
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-
-import { AppRoutingModule } from './app.routing.module';
-import { ErrorsModule } from './errors/errors.module';
-import { CoreModule } from './core/core.module';
-import { HomeModule } from './home/home.module';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    ErrorsModule,
-    CoreModule,
-    AppRoutingModule,
-    HomeModule.forRoot(),
-    StoreModule.forRoot(reducers, {
-      metaReducers
-    })
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-```
-
-We can say the store is a in memory database. We don't have any database and we will able to check by installing the module `ng add @ngrx/store-devtools`. The command will also modify the application root module:
-
-```javascript
-// modification
- StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
-```
+app.module.ts will be modified to add the store and the store-devtools.
 
 ## STORE
 
-Multiple modules of the application manage different parts of the state tree. We can create a store with the command `ng generate store auth/Auth --module auth.module.ts`.
-The command will add into the auth.module.ts the import `   StoreModule.forFeature('auth', fromAuth.reducers, { metaReducers: fromAuth.metaReducers }),` and will also create inside the module folder the new folder `redux` with `index.ts` inside it. 
+Multiple modules of the application manage different parts of the state tree. We can create a store with the command `ng generate store photos/Photos --module photos.module.ts`.
+The command will add into the auth.module.ts the import `StoreModule.forFeature(fromPhotos.photosFeatureKey, fromPhotos.reducers, { metaReducers: fromPhotos.metaReducers })` and will also create inside the module folder the new folder `reducers` with `index.ts` inside it.  Need to fix the import from index.ts that is pointing to the wrong environment.
 
 The meta reducer is something something that we can remove, that can be added later. 
 
@@ -63,7 +24,9 @@ import {
   createSelector,
   MetaReducer
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
+
+export const photosFeatureKey = 'photos';
 
 export interface State {
 
@@ -75,6 +38,32 @@ export const reducers: ActionReducerMap<State> = {
 
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+```
+
+Let's rename to PhotosState to make clear is is the state for the defatulte module
+
+```
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer
+} from '@ngrx/store';
+import { environment } from '../../../environments/environment';
+
+export const photosFeatureKey = 'photos';
+
+export interface PhotosState {
+
+}
+
+export const reducers: ActionReducerMap<PhotosState> = {
+
+};
+
+
+export const metaReducers: MetaReducer<PhotosState>[] = !environment.production ? [] : [];
 
 ```
 
