@@ -18,7 +18,6 @@ export class PhotosEffects {
       )
   );
 
-  /*
   public loadPhoto$ = createEffect(
     () => this.actions$
       .pipe(
@@ -27,7 +26,6 @@ export class PhotosEffects {
         map(photo => photoLoded({ photo }))
       )
   );
-  */
 
   constructor(
     private actions$: Actions,

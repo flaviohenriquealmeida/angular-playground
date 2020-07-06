@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { switchMap, tap } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 
 import { PhotoService } from "../photo/photo.service";
 import { Photo } from "../photo/photo";
@@ -9,6 +10,8 @@ import { AlertService } from "../../shared/components/alert/alert.service";
 import { UserService } from "../../core/services/user/user.service";
 import { PhotoComment } from '../photo/photo-comment';
 import { ConfirmDialogService } from '../../shared/components/confirm-dialog/confirm-dialog.service';
+import { State } from 'src/app/reducers';
+import { selectPhoto } from '../photos.selectors';
 
 @Component({
     templateUrl: './photo-details.component.html'
@@ -26,18 +29,24 @@ export class PhotoDetailsComponent implements OnInit {
         private router: Router,
         private alertService: AlertService,
         private userService: UserService,
-        private confirmDialogService: ConfirmDialogService
+        private confirmDialogService: ConfirmDialogService,
+        private store: Store<State>
     ) {}
 
     ngOnInit(): void {
         this.photoId = parseInt(this.route.snapshot.paramMap.get('photoId'));
         this.comments$ = this.photoService.getComments(this.photoId);
 
+        // why the selector is not type safe here?
+        this.photo$ = this.store.pipe(select(selectPhoto));
+        /*
         this.photo$ = this.photoService.findById(this.photoId);
+
         this.photo$.subscribe(() => {}, err => {
             console.log(err);
             this.router.navigate(['not-found']);
         });
+        */
     }
 
     remove() {

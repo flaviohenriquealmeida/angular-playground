@@ -14,7 +14,6 @@ export class PhotoDetailsResolver implements Resolve<void> {
   constructor(private store: Store<State>) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-
     const photoId = route.paramMap.get('photoId');
     return this.store
       .pipe(
