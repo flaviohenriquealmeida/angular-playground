@@ -6,13 +6,11 @@ import { Observable } from 'rxjs';
 import { Photo } from '../photo/photo';
 import { PhotosState } from '../photos.reducers';
 import { loadAllPhotos } from '../photos.actions';
-import { tap, first, filter, finalize } from 'rxjs/operators';
+import { tap, first, filter, map } from 'rxjs/operators';
 import { arePhotosLoaded } from '../photos.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class PhotoListResolver implements Resolve<Observable<Photo[]>>{
-
-  private loading: boolean = false;
 
   constructor(
     private store: Store<PhotosState>
@@ -24,14 +22,12 @@ export class PhotoListResolver implements Resolve<Observable<Photo[]>>{
       .pipe(
         select(arePhotosLoaded),
         tap(photosLoaded => {
-          if (!this.loading && !photosLoaded) {
-            this.loading = true;
+          if (!photosLoaded) {
             this.store.dispatch(loadAllPhotos({ userName }));
           }
         }),
-        filter(photosLoaded => photosLoaded),
-        first(),
-        finalize(() => this.loading = false)
+        filter(photosLoaded => photosLoaded), //can only complete if loaded, So the first() won't be applied if the filter is false
+        first()
       );
   }
 }
