@@ -17,14 +17,15 @@ import { SharedModule } from '../shared/shared.module';
     NotFoundComponent,
     GlobalErrorComponent
   ],
-  
+  /*
   providers: [
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
     }
   ]
-  
-  
+  */
+
+
 })
 export class ErrorsModule { }

@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit  }from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
+import { State } from 'src/app/reducers';
+import { selectAllPhotos } from '../photos.selectors';
 import { Photo } from '../photo/photo';
 import { PhotoService } from '../photo/photo.service';
-import { tap, finalize } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-photo-list',
@@ -12,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class PhotoListComponent implements OnInit {
 
-  photos: Photo[] = [];
+  photos$: Observable<Photo[]> = of([]);
   filter = '';
   hasMore = true;
   userName = '';
@@ -21,18 +23,20 @@ export class PhotoListComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private photoService: PhotoService
+    private photoService: PhotoService,
+    private store: Store<State>
   ) { }
 
   ngOnInit(): void {
+    this.photos$ = this.store.pipe(select(selectAllPhotos));
     this.activatedRoute.params.subscribe(params => {
       this.userName = params.userName;
-      this.photos = this.activatedRoute.snapshot.data['photos'];
-      this.photosPaginator = this.photoService.getPaginator(this.userName, 2);
+     // this.photosPaginator = this.photoService.getPaginator(this.userName, 2);
     });
   }
 
   load(event) {
+    /*
     if (event != 'bottom') return;
     if (this.hasMore) {
       this.loading = true
@@ -44,5 +48,6 @@ export class PhotoListComponent implements OnInit {
           if (!photos.length) this.hasMore = false;
         });
     }
+    */
   }
 }

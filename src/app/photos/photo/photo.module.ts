@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
+
 import { PhotoComponent } from './photo.component';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
+import { PhotoListResolver } from '../photo-list/photo-list.resolver';
 
 @NgModule({
     declarations: [PhotoComponent],
