@@ -9,8 +9,12 @@ export const selectAllPhotos = createSelector(
   fromPhotos.selectAll
 );
 
-
 export const arePhotosLoaded = createSelector(
   selectPhotosState,
   state => state.allPhotosLoaded
+);
+
+export const selectPhoto = createSelector(
+  selectAllPhotos,
+  (photos, props) => photos.filter(photo => photo.id === props.photoId)
 );

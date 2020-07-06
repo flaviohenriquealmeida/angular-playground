@@ -6,14 +6,15 @@ import { Observable } from 'rxjs';
 import { Photo } from '../photo/photo';
 import { PhotosState } from '../photos.reducers';
 import { loadAllPhotos } from '../photos.actions';
-import { tap, first, filter, map } from 'rxjs/operators';
+import { tap, first, filter } from 'rxjs/operators';
 import { arePhotosLoaded } from '../photos.selectors';
+import { State } from 'src/app/reducers';
 
 @Injectable({ providedIn: 'root' })
 export class PhotoListResolver implements Resolve<Observable<Photo[]>>{
 
   constructor(
-    private store: Store<PhotosState>
+    private store: Store<State>
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {

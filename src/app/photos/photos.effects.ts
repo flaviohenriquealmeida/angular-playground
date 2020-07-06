@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { concatMap, map, switchMap } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 
 import { PhotosActions } from "./photos.action.types";
 import { PhotoService } from './photo/photo.service';
-import { allPhotosLoaded } from './photos.actions';
+import { allPhotosLoaded, photoLoded } from './photos.actions';
 
 @Injectable()
 export class PhotosEffects {
@@ -17,6 +17,17 @@ export class PhotosEffects {
         map(photos => allPhotosLoaded({ photos }))
       )
   );
+
+  /*
+  public loadPhoto$ = createEffect(
+    () => this.actions$
+      .pipe(
+        ofType(PhotosActions.loadPhoto),
+        switchMap(action => this.photosService.findById(parseInt(action.photoId))),
+        map(photo => photoLoded({ photo }))
+      )
+  );
+  */
 
   constructor(
     private actions$: Actions,
