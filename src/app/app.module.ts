@@ -23,9 +23,7 @@ import { environment } from '../environments/environment';
     CoreModule,
     AppRoutingModule,
     HomeModule.forRoot(),
-    StoreModule.forRoot(reducers, {
-      metaReducers
-    }),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(
       {

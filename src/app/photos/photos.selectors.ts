@@ -15,7 +15,22 @@ export const arePhotosLoaded = createSelector(
 );
 
 // why props is not type safe?
-export const selectPhoto = createSelector(
+export const findPhotoById = createSelector(
   selectAllPhotos,
-  (photos, props) => photos.filter(photo => photo.id == props.photoId)[0]
+  (photos, props) => photos.filter(photo => {
+    return photo.id == props.photoId;
+  })[0]
+);
+
+export const selectPhoto = createSelector(
+  selectPhotosState,
+  (state: fromPhotos.PhotosState) => {
+    console.log(state);
+    return state.selectedPhoto;
+  }
+);
+
+export const isPhotoLoaded = createSelector(
+  selectPhoto,
+  photo => !!photo
 );

@@ -14,14 +14,15 @@ import { Photo } from './photo/photo';
 import { PhotosActions } from './photos.action.types';
 
 export const photosFeatureKey = 'photos';
-export interface PhotosState extends EntityState<Photo>{
+export interface PhotosState extends EntityState<Photo> {
   allPhotosLoaded: boolean,
-  photo: Photo
+  selectedPhoto: Photo // cuidado, se usar o nome photo por algum motivo nao funciona
 };
+
 export const adapter = createEntityAdapter<Photo>();
 export const initialState = adapter.getInitialState({
   allPhotosLoaded: false,
-  photo: null
+  selectedPhoto: null
 });
 
 export const photosReducer = createReducer(
@@ -30,7 +31,7 @@ export const photosReducer = createReducer(
     return adapter.addAll(action.photos, {...state, allPhotosLoaded: true });
   }),
   on(PhotosActions.photoLoded, (state, action) => {
-    return { ...state, photo: action.photo };
+    return { ...state, selectedPhoto: action.selectedPhoto };
   })
 );
 

@@ -11,7 +11,7 @@ import { UserService } from "../../core/services/user/user.service";
 import { PhotoComment } from '../photo/photo-comment';
 import { ConfirmDialogService } from '../../shared/components/confirm-dialog/confirm-dialog.service';
 import { State } from 'src/app/reducers';
-import { selectPhoto } from '../photos.selectors';
+import { findPhotoById, selectPhoto } from '../photos.selectors';
 
 @Component({
     templateUrl: './photo-details.component.html'

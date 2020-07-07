@@ -19,5 +19,5 @@ export const loadPhoto = createAction(
 
 export const photoLoded = createAction(
   '[Photo Resolver] Photo Loaded',
-  props<{ photo: Photo }>()
+  props<{ selectedPhoto: Photo }>()
 )

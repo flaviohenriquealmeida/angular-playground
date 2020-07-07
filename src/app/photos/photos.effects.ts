@@ -23,7 +23,7 @@ export class PhotosEffects {
       .pipe(
         ofType(PhotosActions.loadPhoto),
         switchMap(action => this.photosService.findById(parseInt(action.photoId))),
-        map(photo => photoLoded({ photo }))
+        map(selectedPhoto => photoLoded({ selectedPhoto }))
       )
   );
 
