@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
-import { switchMap, tap, takeUntil } from 'rxjs/operators';
+import { switchMap, tap, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 
@@ -13,7 +13,8 @@ import { PhotoComment } from '../photo/photo-comment';
 import { ConfirmDialogService } from '../../shared/components/confirm-dialog/confirm-dialog.service';
 import { State } from 'src/app/reducers';
 import { selectPhoto } from '../photos.selectors';
-import { deletePhoto, deletePhotoError, photoDeleted } from '../photos.actions';
+import { deletePhoto, deletePhotoError, photoDeleted, updatePhoto } from '../photos.actions';
+import { Update } from '@ngrx/entity';
 
 @Component({
   templateUrl: './photo-details.component.html'
@@ -107,6 +108,15 @@ export class PhotoDetailsComponent implements OnInit, OnDestroy {
   }
 
   public like(photo: Photo): void {
+    const likes = photo.likes + 1;
+    const update: Update<Photo> = {
+      id: photo.id,
+      changes: {...photo, likes }
+    };
+    this.store.dispatch(updatePhoto({ update }));
+  }
+
+    /*
     this.photoService
       .like(photo.id)
       .subscribe(liked => {
@@ -114,7 +124,7 @@ export class PhotoDetailsComponent implements OnInit, OnDestroy {
           this.photo$ = this.photoService.findById(photo.id);
         }
       });
-  }
+      */
 
   public addComment(comment: string): void {
     this.comments$ = this.photoService

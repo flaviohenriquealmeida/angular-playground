@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { Update } from '@ngrx/entity';
 
 import { Photo } from './photo/photo'
 
@@ -35,3 +36,7 @@ export const deletePhotoError = createAction(
   '[Photos Effect] Delete photo error'
 );
 
+export const updatePhoto = createAction(
+  '[Photo Form] Update Photo',
+  props<{ update: Update<Photo> }>()
+);

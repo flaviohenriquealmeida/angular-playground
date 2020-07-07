@@ -1,12 +1,11 @@
 import { HttpClient, HttpParams, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { of, throwError, Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 import { Photo } from "./photo";
 import { PhotoComment } from './photo-comment';
-
-import { environment } from '../../../environments/environment';
-import { map, catchError } from 'rxjs/operators';
-import { of, throwError, Observable } from 'rxjs';
 
 const API = environment.ApiUrl;
 
