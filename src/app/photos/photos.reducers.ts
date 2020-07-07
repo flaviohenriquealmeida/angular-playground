@@ -32,6 +32,9 @@ export const photosReducer = createReducer(
   }),
   on(PhotosActions.photoLoded, (state, action) => {
     return { ...state, selectedPhoto: action.selectedPhoto };
+  }),
+  on(PhotosActions.deletePhoto, (state, action) => {
+    return adapter.removeOne(action.photoId, state);
   })
 );
 

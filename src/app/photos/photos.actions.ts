@@ -15,9 +15,23 @@ export const allPhotosLoaded = createAction(
 export const loadPhoto = createAction(
   '[Photo Resolver] Load Photo',
   props<{ photoId: string }>()
-)
+);
 
 export const photoLoded = createAction(
   '[Photo Resolver] Photo Loaded',
   props<{ selectedPhoto: Photo }>()
-)
+);
+
+export const deletePhoto = createAction(
+  '[Photo Form] Delete Photo',
+  props<{ photoId: string }>()
+);
+
+export const photoDeleted = createAction(
+  '[Photos Effect] Photo deleted'
+);
+
+export const deletePhotoError = createAction(
+  '[Photos Effect] Delete photo error'
+);
+

@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { map, switchMap } from "rxjs/operators";
+import { map, switchMap, catchError } from "rxjs/operators";
+import { of } from 'rxjs';
 
 import { PhotosActions } from "./photos.action.types";
 import { PhotoService } from './photo/photo.service';
-import { allPhotosLoaded, photoLoded } from './photos.actions';
+import { allPhotosLoaded, photoLoded, photoDeleted, deletePhotoError } from './photos.actions';
 
 @Injectable()
 export class PhotosEffects {
@@ -27,8 +28,24 @@ export class PhotosEffects {
       )
   );
 
+  public deletePhoto$ = createEffect(
+    () => this.actions$
+      .pipe(
+        ofType(PhotosActions.deletePhoto),
+        switchMap(action =>
+          this.photosService
+          .removePhoto(parseInt(action.photoId))
+          .pipe(catchError(err => {
+            console.log(err);
+            return of(deletePhotoError());
+          }))
+          .pipe(map(() => photoDeleted()))
+        )
+      )
+  );
+
   constructor(
     private actions$: Actions,
-    private photosService: PhotoService
+    private photosService: PhotoService,
   ) {}
 }

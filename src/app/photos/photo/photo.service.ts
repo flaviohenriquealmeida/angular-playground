@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Photo } from "./photo";
@@ -13,80 +13,80 @@ const API = environment.ApiUrl;
 @Injectable({ providedIn: 'root' })
 export class PhotoService {
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-    listFromUser(userName: string) {
-        return this.http
-            .get<Photo[]>(API + '/' + userName + '/photos');
-    }
+  public listFromUser(userName: string): Observable<Photo[]> {
+    return this.http
+      .get<Photo[]>(API + '/' + userName + '/photos');
+  }
 
-    public getAll(userName: string): Observable<Photo[]> {
-      return this.http.get<Photo[]>(API + '/' + userName + '/photos');
-    }
+  public getAll(userName: string): Observable<Photo[]> {
+    return this.http.get<Photo[]>(API + '/' + userName + '/photos');
+  }
 
-    getPaginator(userName: string, page: number = 1) {
+  public getPaginator(userName: string, page: number = 1) {
 
-        return () => {
+    return () => {
 
-            const params = new HttpParams()
-                .append('page', page.toString());
+      const params = new HttpParams()
+        .append('page', page.toString());
 
-            page++;
+      page++;
 
-            return this.http
-                .get<Photo[]>(API + '/' + userName + '/photos', { params })
-            };
-    }
+      return this.http
+        .get<Photo[]>(API + '/' + userName + '/photos', { params })
+    };
+  }
 
-    upload(description: string, allowComments: boolean, file: File) {
+  public upload(description: string, allowComments: boolean, file: File): Observable<HttpEvent<Object>> {
 
-        const formData = new FormData();
-        formData.append('description', description);
-        formData.append('allowComments', allowComments ? 'true' : 'false');
-        formData.append('imageFile', file);
+    const formData = new FormData();
+    formData.append('description', description);
+    formData.append('allowComments', allowComments ? 'true' : 'false');
+    formData.append('imageFile', file);
 
-        return this.http.post(
-            API + '/photos/upload',
-            formData,
-            {
-                observe: 'events',
-                reportProgress: true
-            }
-        );
+    return this.http.post(
+      API + '/photos/upload',
+      formData,
+      {
+        observe: 'events',
+        reportProgress: true
+      }
+    );
 
-    }
+  }
 
-    findById(photoId: number) {
+  public findById(photoId: number): Observable<Photo> {
 
-        return this.http.get<Photo>(API + '/photos/' + photoId);
-    }
+    return this.http.get<Photo>(API + '/photos/' + photoId);
+  }
 
-    getComments(photoId: number) {
-        return this.http.get<PhotoComment[]>(
-                API + '/photos/' + photoId + '/comments'
-        );
-    }
+  public getComments(photoId: number): Observable<PhotoComment[]> {
+    return this.http.get<PhotoComment[]>(
+      API + '/photos/' + photoId + '/comments'
+    );
+  }
 
-    addComment(photoId: number, commentText: string) {
+  public addComment(photoId: number, commentText: string): Observable<void> {
 
-        return this.http.post(
-            API + '/photos/' + photoId + '/comments',
-            { commentText }
-        );
-    }
+    return this.http.post<void>(
+      API + '/photos/' + photoId + '/comments',
+      { commentText }
+    );
+  }
 
-    removePhoto(photoId: number) {
-        return this.http.delete(API + '/photos/' + photoId);
-    }
+  public removePhoto(photoId: number): Observable<void> {
+    return this.http.delete<void>(API + '/photos/' + photoId);
+  }
 
-    like(photoId: number) {
+  public like(photoId: number): Observable<boolean> {
 
-        return this.http.post(
-            API + '/photos/' + photoId + '/like', {}, { observe: 'response'}
-        )
-        .pipe(map(res => true))
-        .pipe(catchError(err => {
-            return err.status == '304' ? of(false) : throwError(err);
-        }));
-    }
+    return this.http.post(
+      API + '/photos/' + photoId + '/like', {}, { observe: 'response' }
+    )
+      .pipe(map(res => true))
+      .pipe(catchError(err => {
+        return err.status == '304' ? of(false) : throwError(err);
+      }));
+  }
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { switchMap, tap } from 'rxjs/operators';
+import { Observable, Subject } from "rxjs";
+import { switchMap, tap, takeUntil } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
 
 import { PhotoService } from "../photo/photo.service";
 import { Photo } from "../photo/photo";
@@ -11,77 +12,114 @@ import { UserService } from "../../core/services/user/user.service";
 import { PhotoComment } from '../photo/photo-comment';
 import { ConfirmDialogService } from '../../shared/components/confirm-dialog/confirm-dialog.service';
 import { State } from 'src/app/reducers';
-import { findPhotoById, selectPhoto } from '../photos.selectors';
+import { selectPhoto } from '../photos.selectors';
+import { deletePhoto, deletePhotoError, photoDeleted } from '../photos.actions';
 
 @Component({
-    templateUrl: './photo-details.component.html'
+  templateUrl: './photo-details.component.html'
 })
-export class PhotoDetailsComponent implements OnInit {
+export class PhotoDetailsComponent implements OnInit, OnDestroy {
 
-    photo$: Observable<Photo>;
-    comments$: Observable<PhotoComment[]>
-    photoId: number;
-    commentsCountFromCurrentUser = 0;
+  public photo$: Observable<Photo>;
+  public comments$: Observable<PhotoComment[]>
+  public commentsCountFromCurrentUser = 0;
 
-    constructor(
-        private route: ActivatedRoute,
-        private photoService: PhotoService,
-        private router: Router,
-        private alertService: AlertService,
-        private userService: UserService,
-        private confirmDialogService: ConfirmDialogService,
-        private store: Store<State>
-    ) {}
+  private photoId: string;
+  private unsubscribe: Subject<void> = new Subject();
 
-    ngOnInit(): void {
-        this.photoId = parseInt(this.route.snapshot.paramMap.get('photoId'));
-        this.comments$ = this.photoService.getComments(this.photoId);
+  constructor(
+    private route: ActivatedRoute,
+    private photoService: PhotoService,
+    private router: Router,
+    private alertService: AlertService,
+    private userService: UserService,
+    private confirmDialogService: ConfirmDialogService,
+    private store: Store<State>,
+    private actions$: Actions
+  ) { }
 
-        // why the selector is not type safe here?
-        this.photo$ = this.store.pipe(select(selectPhoto));
-        /*
-        this.photo$ = this.photoService.findById(this.photoId);
+  public ngOnDestroy(): void {
+    this.unsubscribe.next(),
+      this.unsubscribe.complete()
+  }
 
-        this.photo$.subscribe(() => {}, err => {
-            console.log(err);
-            this.router.navigate(['not-found']);
-        });
-        */
-    }
+  public ngOnInit(): void {
+    this.photoId = this.route.snapshot.paramMap.get('photoId');
+    this.comments$ = this.photoService.getComments(parseInt(this.photoId));
 
-    remove() {
-        this.confirmDialogService.open({
-            onConfirm: () => {
-                this.photoService
-                .removePhoto(this.photoId)
-                .pipe(switchMap(() => this.userService.getUser$()))
-                .subscribe(
-                    user => {
-                        this.alertService.success("Photo removed", true);
-                        this.router.navigate(['/user', user.name], { replaceUrl: true });
-                    },
-                    err => {
-                        console.log(err);
-                        this.alertService.warning('Could not delete the photo!', true);
-                    });
-            }
-        });
-    }
+    // why the selector is not type safe here?
+    this.photo$ = this.store.pipe(select(selectPhoto));
+    /*
+    this.photo$ = this.photoService.findById(this.photoId);
 
-    like(photo: Photo) {
-        this.photoService
-            .like(photo.id)
-            .subscribe(liked => {
-                if(liked) {
-                    this.photo$ = this.photoService.findById(photo.id);
-                }
-            });
-    }
+    this.photo$.subscribe(() => {}, err => {
+        console.log(err);
+        this.router.navigate(['not-found']);
+    });
+    */
+  }
 
-    addComment(comment: string) {
-        this.comments$ = this.photoService
-            .addComment(this.photoId, comment)
-            .pipe(switchMap(() => this.photoService.getComments(this.photoId)))
-            .pipe(tap(() => this.commentsCountFromCurrentUser++));
-    }
+  public remove(): void {
+    this.store.dispatch(deletePhoto({ photoId: this.photoId }))
+
+    // I don't like to subscribe for every action how handle special logic
+    // I can'do that inside the effect because I need the username, so I would
+    // have to add the user name as a parameter.
+    this.actions$
+      .pipe(
+        ofType(photoDeleted),
+        switchMap(() => this.userService.getUser$()),
+        takeUntil(this.unsubscribe)
+      )
+      .subscribe(user => {
+        this.alertService.success("Photo removed", true);
+        this.router.navigate(['/user', user.name], { replaceUrl: true });
+      });
+
+    this.actions$
+      .pipe(
+        ofType(deletePhotoError),
+        takeUntil(this.unsubscribe)
+      )
+      .subscribe(() => {
+        this.alertService.warning('Could not delete the photo!', true);
+      });
+
+    /*
+      this.confirmDialogService.open({
+          onConfirm: () => {
+              this.store.dispatch(deletePhoto({ photoId: this.photoId }))
+              this.photoService
+              .removePhoto(parseInt(this.photoId))
+              .pipe(switchMap(() => this.userService.getUser$()))
+              .subscribe(
+                  user => {
+                      this.alertService.success("Photo removed", true);
+                      this.router.navigate(['/user', user.name], { replaceUrl: true });
+                  },
+                  err => {
+                      console.log(err);
+                      this.alertService.warning('Could not delete the photo!', true);
+                  });
+          }
+      });
+      */
+  }
+
+  public like(photo: Photo): void {
+    this.photoService
+      .like(photo.id)
+      .subscribe(liked => {
+        if (liked) {
+          this.photo$ = this.photoService.findById(photo.id);
+        }
+      });
+  }
+
+  public addComment(comment: string): void {
+    this.comments$ = this.photoService
+      .addComment(parseInt(this.photoId), comment)
+      .pipe(switchMap(() => this.photoService.getComments(parseInt(this.photoId))))
+      .pipe(tap(() => this.commentsCountFromCurrentUser++));
+  }
 }
