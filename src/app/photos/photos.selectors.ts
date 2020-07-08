@@ -24,11 +24,7 @@ export const findPhotoById = createSelector(
 
 export const selectPhoto = createSelector(
   selectPhotosState,
-  (state: fromPhotos.PhotosState) => {
-    console.log(state);
-    return state.selectedPhoto;
-  }
-);
+  (state: fromPhotos.PhotosState) => state.selectedPhoto);
 
 export const isPhotoLoaded = createSelector(
   selectPhoto,

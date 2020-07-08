@@ -23,7 +23,17 @@ import { environment } from '../environments/environment';
     CoreModule,
     AppRoutingModule,
     HomeModule.forRoot(),
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(reducers,
+      {
+        metaReducers,
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true,
+          strictActionSerializability: true,
+          strictStateSerializability: true
+        }
+      }
+    ),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(
       {

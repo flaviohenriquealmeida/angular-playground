@@ -78,6 +78,8 @@ export class PhotoService {
     return this.http.delete<void>(API + '/photos/' + photoId);
   }
 
+  // Users can't like twice the same photo. Need to change to like or unlike
+  // or return true or false if the user was able to like the photo.
   public like(photoId: number): Observable<boolean> {
 
     return this.http.post(
