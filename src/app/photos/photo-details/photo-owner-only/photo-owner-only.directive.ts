@@ -15,13 +15,13 @@ export class PhotoOwnerOnlyDirective implements OnInit {
         private element: ElementRef<any>,
         private renderer: Renderer2,
         private userService: UserService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.userService
             .getUser$()
             .subscribe(user => {
-                if(!user || user.id != this.ownedPhoto.userId) {
+                if (!user || user.id != this.ownedPhoto.userId) {
                     this.renderer.setStyle(this.element.nativeElement, 'display', 'none');
                 }
             });

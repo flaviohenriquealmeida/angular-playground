@@ -20,7 +20,8 @@ import { SharedModule } from '../../shared/shared.module';
         FilterByDescription,
         SearchComponent
     ],
-    imports: [ 
+    exports: [PhotoListComponent],
+    imports: [
         PhotoModule,
         SharedModule
     ]
