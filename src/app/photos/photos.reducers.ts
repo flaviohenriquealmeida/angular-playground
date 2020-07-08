@@ -44,6 +44,6 @@ export const photosReducer = createReducer(
   })
 );
 
-export const { selectAll, selectIds } = photosAdapter.getSelectors();
+export const { selectAll: selectAllPhotos } = photosAdapter.getSelectors();
 
 export const metaReducers: MetaReducer<PhotosState>[] = !environment.production ? [] : [];

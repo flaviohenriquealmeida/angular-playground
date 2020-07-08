@@ -6,7 +6,7 @@ export const selectPhotosState
 
 export const selectAllPhotos = createSelector(
   selectPhotosState,
-  fromPhotos.selectAll
+  fromPhotos.selectAllPhotos
 );
 
 export const arePhotosLoaded = createSelector(
