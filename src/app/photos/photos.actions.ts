@@ -37,6 +37,6 @@ export const deletePhotoError = createAction(
 );
 
 export const updatePhotoLikes = createAction(
-  '[Photo Form] Update Photo',
+  '[Photo Form] Update Photo likes',
   props<{ update: Update<Photo> }>()
 );
