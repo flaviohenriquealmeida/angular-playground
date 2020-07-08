@@ -44,6 +44,13 @@ export class PhotosEffects {
       )
   );
 
+  public updatePhotosLike = createEffect(
+    () => this.actions$
+      .pipe(ofType(PhotosActions.updatePhotoLikes))
+      .pipe(switchMap(update => this.photosService.like(<number>update.update.id))),
+    { dispatch: false }
+  )
+
   constructor(
     private actions$: Actions,
     private photosService: PhotoService,

@@ -36,7 +36,7 @@ export const deletePhotoError = createAction(
   '[Photos Effect] Delete photo error'
 );
 
-export const updatePhoto = createAction(
+export const updatePhotoLikes = createAction(
   '[Photo Form] Update Photo',
   props<{ update: Update<Photo> }>()
 );

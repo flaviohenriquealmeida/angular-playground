@@ -36,7 +36,7 @@ export const photosReducer = createReducer(
   on(PhotosActions.deletePhoto, (state, action) => {
     return adapter.removeOne(action.photoId, state);
   }),
-  on(PhotosActions.updatePhoto, (state, action) => {
+  on(PhotosActions.updatePhotoLikes, (state, action) => {
     const newState = adapter.updateOne(action.update, state);
     // if I use action.update directly, won't work. Need to create a new reference.
     const newPhoto = {...action.update.changes };

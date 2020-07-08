@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
-import { switchMap, tap, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { switchMap, tap, takeUntil } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 
@@ -13,7 +13,7 @@ import { PhotoComment } from '../photo/photo-comment';
 import { ConfirmDialogService } from '../../shared/components/confirm-dialog/confirm-dialog.service';
 import { State } from 'src/app/reducers';
 import { selectPhoto } from '../photos.selectors';
-import { deletePhoto, deletePhotoError, photoDeleted, updatePhoto } from '../photos.actions';
+import { deletePhoto, deletePhotoError, photoDeleted, updatePhotoLikes } from '../photos.actions';
 import { Update } from '@ngrx/entity';
 
 @Component({
@@ -113,7 +113,7 @@ export class PhotoDetailsComponent implements OnInit, OnDestroy {
       id: photo.id,
       changes: {...photo, likes }
     };
-    this.store.dispatch(updatePhoto({ update }));
+    this.store.dispatch(updatePhotoLikes({ update }));
   }
 
     /*
